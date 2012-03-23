@@ -36,7 +36,10 @@ module AuthorizedKeys
       list = []
       ::File.open location, 'r' do |file|
         file.each do |line|
-          list.push( AuthorizedKeys::Key.new line.chomp)
+          li = line.chomp
+          if ! li.blank? && li !~ /^#/
+            list.push( AuthorizedKeys::Key.new li)
+          end
         end
       end
       list
